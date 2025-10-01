@@ -1,0 +1,230 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  age       Int?
+  gender    String?
+  accountType String @default("individual")
+  questionnaireCompleted Boolean @default(false)
+  referredBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  subscription Subscription?
+  mealPlans MealPlan[]
+  questionnaireResponses QuestionnaireResponse[]
+  familyMembers FamilyMember[]
+  cookbookAccess UserCookbookAccess[]
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  plan      String   @default("free")
+  status    String   @default("active")
+  stripeCustomerId String?
+  stripeSubscriptionId String?
+  currentPeriodEnd DateTime?
+  paymentFailedAt DateTime?
+  gracePeriodEndsAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paymentHistory PaymentHistory[]
+}
+
+model PaymentHistory {
+  id        String   @id @default(cuid())
+  subscriptionId String
+  amount    Int
+  currency  String   @default("usd")
+  status    String
+  stripePaymentIntentId String?
+  failureReason String?
+  attemptedAt DateTime @default(now())
+  
+  subscription Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+}
+
+model Cookbook {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  theme     String
+  description String?
+  category  String
+  tags      String[]
+  isPremium Boolean  @default(false)
+  featured  Boolean  @default(false)
+  mealCount Int      @default(90)
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  
+  recipes Recipe[]
+  userCookbookAccess UserCookbookAccess[]
+}
+
+model UserCookbookAccess {
+  id        String   @id @default(cuid())
+  userId    String
+  cookbookId String
+  assignedAt DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cookbook Cookbook @relation(fields: [cookbookId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, cookbookId])
+}
+
+model Recipe {
+  id        String   @id @default(cuid())
+  name      String
+  category  String
+  cookbookId String
+  calories  Int
+  protein   Int
+  carbs     Int
+  fats      Int
+  prepTime  Int
+  ingredients String[]
+  instructions String?
+  dietary   String[]
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  
+  cookbook Cookbook @relation(fields: [cookbookId], references: [id], onDelete: Cascade)
+  mealPlanMeals MealPlanMeal[]
+}
+
+model MealPlan {
+  id        String   @id @default(cuid())
+  userId    String
+  weekOf    DateTime
+  status    String   @default("active")
+  rating    Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  meals MealPlanMeal[]
+}
+
+model MealPlanMeal {
+  id        String   @id @default(cuid())
+  mealPlanId String
+  recipeId  String
+  day       String
+  mealType  String
+  
+  mealPlan MealPlan @relation(fields: [mealPlanId], references: [id], onDelete: Cascade)
+  recipe Recipe @relation(fields: [recipeId], references: [id])
+}
+
+model FamilyMember {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  age       Int
+  sex       String
+  height    Json
+  currentWeight Int
+  targetWeight Int
+  bodyFat   Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profile FamilyMemberProfile?
+}
+
+model FamilyMemberProfile {
+  id        String   @id @default(cuid())
+  familyMemberId String @unique
+  
+  healthGoals String[]
+  timeline String?
+  priority String?
+  pastDietStruggles String?
+  motivationLevel Int?
+  
+  medicalConditions String[]
+  familyHistory String[]
+  medications Boolean @default(false)
+  hormonalConcerns String[]
+  currentSymptoms String[]
+  
+  allergies String[]
+  intolerances String[]
+  
+  dietType String?
+  eatsRedMeat String?
+  eatsPoultry String?
+  eatsSeafood String?
+  religiousDietaryRestrictions String[]
+  favoriteCuisines String[]
+  dislikedCuisines String[]
+  spicePreference String?
+  foodsToAvoid String[]
+  foodsToInclude String[]
+  wantsDesserts String?
+  coffeeTea String?
+  alcoholFrequency String?
+  cravingType String?
+  
+  sleepHours String?
+  waterIntake String?
+  
+  activityLevel String?
+  hasWorkoutRoutine Boolean @default(false)
+  workoutDaysPerWeek Int?
+  workoutType String?
+  workoutDuration String?
+  syncWithTraining Boolean @default(false)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  familyMember FamilyMember @relation(fields: [familyMemberId], references: [id], onDelete: Cascade)
+}
+
+model QuestionnaireResponse {
+  id        String   @id @default(cuid())
+  userId    String
+  
+  accountType String
+  totalPeople Int @default(1)
+  region String?
+  
+  cookingSkillLevel String?
+  breakfastTime String?
+  lunchTime String?
+  dinnerTime String?
+  kitchenEquipment String[]
+  mealPrepPreference String?
+  mealsPerDay String?
+  mealSizePreference String?
+  lunchPacking String?
+  eatingOutFrequency String?
+  shoppingPreferences String[]
+  
+  weeklyBudget String?
+  specialtyIngredients String?
+  travelFrequency String?
+  
+  responses Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

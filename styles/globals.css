@@ -1,0 +1,52 @@
+/* Reset + base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
+  color: #222;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #1a7f37; /* Healthy green */
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: #1a7f37;
+  color: white;
+  border-radius: 4px;
+  transition: background 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #145a27;
+}
+
+/* Layout helpers */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Accessibility colors (color-blind friendly palette) */
+:root {
+  --brand-green: #1a7f37;
+  --brand-light: #f8f9f9;
+  --brand-gray: #666;
+  --brand-dark: #222;
+}

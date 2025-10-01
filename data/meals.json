@@ -1,0 +1,43 @@
+{
+  "meals": [
+    {
+      "id": 1,
+      "name": "Avocado Toast with Poached Egg",
+      "category": "breakfast",
+      "cookbookId": 1,
+      "calories": 350,
+      "protein": 15,
+      "carbs": 35,
+      "fats": 18,
+      "prepTime": 15,
+      "ingredients": ["avocado", "bread", "egg", "salt", "pepper", "lemon"],
+      "dietary": ["vegetarian"]
+    },
+    {
+      "id": 2,
+      "name": "Grilled Chicken Caesar Salad",
+      "category": "lunch",
+      "cookbookId": 1,
+      "calories": 450,
+      "protein": 35,
+      "carbs": 25,
+      "fats": 22,
+      "prepTime": 25,
+      "ingredients": ["chicken breast", "romaine lettuce", "parmesan", "caesar dressing", "croutons"],
+      "dietary": []
+    },
+    {
+      "id": 3,
+      "name": "Baked Salmon with Roasted Vegetables",
+      "category": "dinner",
+      "cookbookId": 1,
+      "calories": 550,
+      "protein": 42,
+      "carbs": 35,
+      "fats": 28,
+      "prepTime": 35,
+      "ingredients": ["salmon fillet", "broccoli", "carrots", "olive oil", "garlic", "lemon"],
+      "dietary": ["gluten-free"]
+    }
+  ]
+}

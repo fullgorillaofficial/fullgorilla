@@ -1,0 +1,58 @@
+{
+  "cookbooks": [
+    {
+      "id": 1,
+      "name": "Mediterranean Delights",
+      "theme": "Mediterranean",
+      "mealCount": 90,
+      "description": "Fresh, healthy recipes inspired by Mediterranean cuisine",
+      "isPremium": false,
+      "featured": true
+    },
+    {
+      "id": 2,
+      "name": "Keto Kitchen",
+      "theme": "Keto",
+      "mealCount": 90,
+      "description": "Low-carb, high-fat recipes for ketogenic diet",
+      "isPremium": false,
+      "featured": true
+    },
+    {
+      "id": 3,
+      "name": "Italian Classics",
+      "theme": "Italian",
+      "mealCount": 90,
+      "description": "Traditional Italian recipes made simple",
+      "isPremium": false,
+      "featured": true
+    },
+    {
+      "id": 4,
+      "name": "Asian Fusion",
+      "theme": "Asian",
+      "mealCount": 90,
+      "description": "Delicious Asian-inspired dishes",
+      "isPremium": false,
+      "featured": true
+    },
+    {
+      "id": 5,
+      "name": "Quick & Easy",
+      "theme": "Quick Meals",
+      "mealCount": 90,
+      "description": "30-minute meals for busy weeknights",
+      "isPremium": true,
+      "featured": false
+    },
+    {
+      "id": 6,
+      "name": "Vegan Vibes",
+      "theme": "Vegan",
+      "mealCount": 90,
+      "description": "Plant-based recipes that don't compromise on flavor",
+      "isPremium": true,
+      "featured": false
+    }
+  ]
+}
