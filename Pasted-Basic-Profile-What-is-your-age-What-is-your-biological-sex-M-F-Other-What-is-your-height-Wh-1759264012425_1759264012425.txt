@@ -1,0 +1,133 @@
+Basic Profile
+
+What is your age?
+
+What is your biological sex? (M/F/Other)
+
+What is your height?
+
+What is your current weight?
+
+What is your target weight or goal weight?
+
+What is your current body fat % (if known)?
+
+What is your time zone?
+
+🔹 Health & Medical
+
+Do you have any diagnosed medical conditions?
+
+Are you currently taking any medications that affect appetite, digestion, or metabolism?
+
+Do you have any food allergies?
+
+Do you have any food intolerances?
+
+Do you experience digestive issues (bloating, IBS, constipation, acid reflux)?
+
+Do you have a family history of health conditions? (Diabetes, heart disease, obesity, thyroid issues, PCOS, etc.)
+
+Do you currently experience low energy, brain fog, or frequent fatigue?
+
+Do you have joint pain, inflammation, or arthritis symptoms?
+
+Do you have hormonal concerns? (Thyroid, PCOS, menopause, low testosterone, etc.)
+
+Do you want meals targeted for a specific medical condition?
+
+🔹 Fitness & Activity
+
+How physically active are you on a typical day?
+
+Do you currently follow a workout routine?
+
+If yes, how many days per week do you work out?
+
+What type of exercise do you mostly do? (Strength, cardio, sports, mixed)
+
+How long are your typical workout sessions?
+
+Do you track your steps daily? If yes, how many on average?
+
+Do you currently play sports? (Which ones, how often)
+
+Do you want meal plans synced with your training?
+
+🔹 Goals & Priorities
+
+What is your primary health/fitness goal?
+
+What is your secondary goal?
+
+What timeline are you aiming for these results?
+
+What’s your biggest struggle with past diets?
+
+What’s most important to you: Speed of results, Sustainability, or Flexibility?
+
+On a scale of 1–10, how motivated are you right now?
+
+Do you prefer a strict structured plan or a flexible one?
+
+🔹 Dietary Preferences
+
+Do you follow a specific diet? (Vegan, Vegetarian, Pescatarian, Paleo, Keto, Mediterranean, Low-carb, High-protein, Flexitarian, Other)
+
+Are there foods you absolutely avoid for cultural/religious reasons?
+
+Are there foods you absolutely dislike?
+
+Are there foods you want included often?
+
+Which cuisines do you enjoy most?
+
+Which cuisines do you dislike?
+
+Do you like spicy food?
+
+Do you want healthy versions of desserts/snacks included?
+
+Do you drink coffee or tea daily?
+
+Do you drink alcohol? (How often)
+
+How often do you eat out or order takeout?
+
+Do you want healthy restaurant-style swaps included?
+
+🔹 Lifestyle & Environment
+
+What is your cooking skill level?
+
+What kitchen equipment do you have available?
+
+How much time do you have to cook breakfast?
+
+How much time do you have to cook lunch?
+
+How much time do you have to cook dinner?
+
+What is your grocery budget level?
+
+Do you prefer batch cooking/meal prep or cooking fresh daily?
+
+How many meals per day do you prefer?
+
+Do you prefer larger meals or smaller meals/snacks more often?
+
+Do you usually eat alone, with a partner, or family/kids?
+
+Should your meal plan include family/kid-friendly meals?
+
+Do you travel often?
+
+Do you need meals that are portable/packable?
+
+Do you want auto-generated shopping lists from your meal plan?
+
+🔹 Behavior & Psychology
+
+Do you struggle more with salty cravings or sweet cravings?
+
+How willing are you to try new foods on a scale of 1–10?

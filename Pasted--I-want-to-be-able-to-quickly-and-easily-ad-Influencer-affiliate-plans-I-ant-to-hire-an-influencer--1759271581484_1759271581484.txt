@@ -1,0 +1,161 @@
+ I want to be able to quickly and easily ad Influencer affiliate plans. I ant to hire an influencer buil them their own full gorilla team ambasador landing page for clients or followers. then as each ne user is acquired into the pro plan for 9.99 the influencer gets a paycheck for perpetuity a long as their user is current each minth they receive $2 or whatever we put in the backend for their share and our billing system automatcally knows where the new user came from and as we build the influencer profile we ad beck end billing shar to that influencer per user per mon and billing sends us our share and them their share
+Build A Working Web App with AI said:
+Thought for 10s
+
+Nice — this is a great growth idea, Dana. I’ll capture it as a concrete spec and show exactly how to add influencer/affiliate plans so they can get recurring payments (easy at launch, fully automated later). I can’t “save” it outside this chat permanently, but I will add it to the project plan/readme and the app file tree when you tell me to proceed.
+
+Below is a clear, non-techy → technical plan you can use now, plus two implementation paths (MVP simple vs. scalable automated). Pick one and I’ll add the files/code.
+
+Influencer / Affiliate Program — Spec (what you described)
+
+Each influencer gets their own landing page (e.g., fullgorilla.com/in/amy or amy.fullgorilla.com) to promote.
+
+New users who sign up via that link are tagged to the influencer.
+
+When a tagged user becomes a Pro (paid) subscriber ($9.99/mo), the influencer gets a recurring commission (example: $2/mo) for every month that user remains an active paying subscriber.
+
+The billing system must know the origin of each user, credit the influencer in the backend, and pay the influencer their share monthly.
+
+Admin should be able to set the influencer’s per-user share in the backend.
+
+Support future features: affiliate analytics, leaderboard, custom promo codes, tiered rates.
+
+Implementation options
+Option 1 — MVP (launch fast, manual payouts)
+
+Good if: you want to launch quickly with limited engineering and no payout automation.
+
+Track affiliates with a unique affiliate_code or URL param (?ref=amy123).
+
+On signup, store affiliateId in the user record (JSON users or DB).
+
+On subscription success (Stripe webhook), create a ledger entry:
+
+{
+  affiliateId, userId, subscriptionId, monthlyRate: 9.99, affiliateShare: 2.00, month: "2025-10"
+}
+
+
+Build an Affiliate CSV Export (admin button) that exports all owed commissions per influencer each month.
+
+Manually pay influencers (PayPal / bank transfer) and mark ledger entries as paid.
+
+Pros: Fast, low-cost, low complexity.
+Cons: Manual bookkeeping and payouts.
+
+Option 2 — Scalable (automated payouts with Stripe Connect)
+
+Good if: you want fully automated recurring payouts and minimal manual work as you scale.
+
+Use Stripe Connect (Express accounts for influencers).
+
+Workflow:
+
+Influencer signs up and connects a payout account via Stripe Connect onboarding.
+
+When a referred user subscribes, your Stripe subscription billing handles the charge.
+
+Use Stripe webhooks to listen for invoice.paid or checkout.session.completed.
+
+For each successful payment, either:
+
+Create a destination charge or use Transfer to send $2 to the influencer’s connected account, or
+
+Keep receipts in your ledger and do scheduled automatic transfers (recommended).
+
+Store affiliateId on the Stripe Customer or metadata on the subscription so it’s always linked.
+
+Stripe can schedule monthly payouts to connected accounts automatically.
+
+Pros: Fully automated, reliable, scalable.
+Cons: More initial setup (Stripe Connect, KYC for influencers), Stripe fees on transfers.
+
+Data model (minimal)
+// Affiliate
+{
+  id: "aff_123",
+  handle: "amy",
+  name: "Amy Influencer",
+  email: "amy@example.com",
+  payoutMethod: "stripe_connect" | "manual",
+  stripeAccountId?: "acct_...",
+  perUserShare: 2.00, // currency
+  createdAt: "...",
+  status: "active" | "paused"
+}
+
+// User
+{
+  id: "user_abc",
+  name: "Dana",
+  email: "...",
+  affiliateId?: "aff_123",
+  plan: "free" | "pro",
+  stripeCustomerId?: "...",
+  createdAt: "..."
+}
+
+// CommissionLedger (each monthly record)
+{
+  id,
+  affiliateId,
+  userId,
+  subscriptionId,
+  month: "2025-09",
+  amountOwed: 2.00,
+  amountPaid: 0.00,
+  paidAt?: null,
+  status: "unpaid" | "pending" | "paid"
+}
+
+API & backend hooks (high level)
+
+GET /in/[affiliateHandle] — public landing page for influencer (shows sign-up CTA, stats).
+
+POST /api/signup — include affiliate param; store affiliateId on user record.
+
+POST /api/stripe/webhook — on checkout.session.completed or invoice.paid:
+
+Check metadata.affiliateId or user record.
+
+Create a CommissionLedger entry.
+
+If using Stripe Connect: trigger a transfer/transfer schedule to influencer’s Stripe account.
+
+GET /admin/affiliate/:id/export — export CSV of pending payouts.
+
+Minimal UI pieces to add
+
+Affiliate signup page for influencers (collect name, email, payout preference).
+
+Influencer landing page generator (uses affiliate handle).
+
+Admin panel: view affiliates, set perUserShare, export CSV, mark paid.
+
+Affiliate dashboard (Phase 2): affiliate sees referred count and earnings.
+
+Security, tax & compliance notes
+
+Stripe Connect requires KYC for influencers in many countries. Expect onboarding friction.
+
+Record invoices & payouts for tax reporting. Ask affiliates to provide tax forms (W-9/ W-8) as needed.
+
+Prevent fraud (fake signups) — limit bonuses or require trial verification.
+
+What I will add to your project files if you want me to (MVP + fields)
+
+/src/pages/in/[handle].tsx — influencer landing page.
+
+/src/pages/affiliate/signup.tsx — influencer onboarding.
+
+/src/api/affiliate/create.ts — create affiliate backend.
+
+/src/api/webhooks/stripe.ts — webhook handler (creates ledger entries).
+
+/src/data/affiliates.json — affiliate records (MVP)
+
+/src/data/commissions.json — ledger (MVP)
+
+Update README & file tree with Affiliate section and env vars:
+
+AFFILIATE_DEFAULT_SHARE, STRIPE_SECRET_KEY, STRIPE_CONNECT_CLIENT_ID, PAYOUT_METHOD
